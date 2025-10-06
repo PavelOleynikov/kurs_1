@@ -7,6 +7,8 @@ import requests
 from dotenv import load_dotenv
 from pandas import DataFrame
 import logging
+import re
+
 
 load_dotenv()  # загрузка переменных из .env-файла
 
@@ -57,6 +59,7 @@ def get_slice_data(date_time: str) -> list[str]:
 def get_cut_from_excel(path_to_file: str, period_date: list[str]) -> DataFrame:
     """читает файл xlsx и фильтрует операции за выбранный период"""
 
+    logger.info(f"получение данных из файла {path_to_file}")
     df = pd.read_excel(path_to_file)  # читаем файл xlsx и получаем объект DataFrame
 
     df["Дата операции"] = pd.to_datetime(df["Дата операции"], dayfirst=True)  # перевод строки в объект pd
@@ -123,6 +126,7 @@ def get_currency_rates(path_to_file: str) -> list[dict]:
         raise Exception("API_KEY не найден в переменных окружения")
 
     currency_rates = []
+    logger.info(f"получение данных из файла {path_to_file}")
     with open(path_to_file, "r", encoding="utf-8") as file:
         data = json.load(file)
         for cur in data["user_currencies"]:
@@ -154,6 +158,7 @@ def get_stock_prices(path_to_file: str) -> list[dict]:
         raise Exception("API_KEY_TD не найден в переменных окружения")
 
     stock_prices = []
+    logger.info(f"получение данных из файла {path_to_file}")
     with open(path_to_file, "r", encoding="utf-8") as file:
         data = json.load(file)
         for stock in data["user_stocks"]:
@@ -171,3 +176,21 @@ def get_stock_prices(path_to_file: str) -> list[dict]:
             stock_prices.append({"stock": stock, "price": price})
     logger.info("текущая стоимость акций")
     return stock_prices
+
+
+def process_bank_search(path_to_file: str, search: str) -> list[dict]:
+    """функция возвращает список операций по заданной строке поиска"""
+
+    df = pd.read_excel(path_to_file)  # читаем файл xlsx и получаем объект DataFrame
+    dict_list = df.to_dict(orient="records")  # преобразуем df в список словарей
+
+    result_list = []
+    pattern = re.compile(search, re.IGNORECASE)
+    # компилированный (регистро-независимый) шаблон для поиска
+
+    for operation in dict_list:
+        category_ = operation.get("Категория", "")
+        if category_ is not None and pattern.search(str(category_)):
+            result_list.append(operation)
+    logger.info("список операций по строке поиска")
+    return result_list
