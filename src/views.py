@@ -1,11 +1,18 @@
 import json
 
 from config import PATH_TO_EXCEL, PATH_TO_JSON
-from src.utils import (current_time_greeting, get_card_with_spent, get_currency_rates, get_cut_from_excel,
-                       get_slice_data, get_stock_prices, get_transactions_by_pay)
+from src.utils import (
+    current_time_greeting,
+    get_card_with_spent,
+    get_currency_rates,
+    get_cut_from_excel,
+    get_slice_data,
+    get_stock_prices,
+    get_transactions_by_pay,
+)
 
 
-def main_page(date_str: str) -> dict[str, str | list[dict[str, str | float]]]:
+def main_page(date_str: str) -> json:
     """функция получает дату и время и возвращает json-ответ с операциями за указанный период"""
 
     time_period = get_slice_data(date_str)  # выбранный период для фильтрации
