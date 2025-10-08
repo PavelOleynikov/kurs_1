@@ -21,6 +21,36 @@ file_handler.setFormatter(file_formatter)
 logger.addHandler(file_handler)
 
 
+def write_to_file(filename=None):
+    """Декоратор для функций-отчетов, который записывает в файл результат
+    работы функции, формирующей отчет.
+    Если задан filename, принимает имя файла в качестве параметра.
+    """
+
+    def decorator(func):
+        """Возвращает обёртку, которая записывает в файл результат работы функции func"""
+
+        def wrapper(*args, **kwargs):
+            """Обёртка для выполнения функции func с записью её результата"""
+
+            result = func(*args, **kwargs)
+            if filename:
+                file = open(filename, mode="w", encoding="utf-8")
+                file.write(f"{result}\n")
+                file.close()
+            else:
+                file = open("./data/report.txt", mode="w", encoding="utf-8")
+                file.write(f"{result}\n")
+                file.close()
+            return result
+
+        return wrapper
+
+    logger.info("произведена запись результата работы функции в файл")
+    return decorator
+
+
+@write_to_file(filename="")  # запись результата в файл
 def spending_by_category(transactions: pd.DataFrame, category: str, date: Optional[str] = None) -> pd.DataFrame:
     """
     Функция возвращает траты по заданной категории за последние три месяца (от переданной даты).
