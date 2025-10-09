@@ -1,31 +1,40 @@
-{
-    "greeting": "Добрый день",
-    "cards": [
-        {"last_digits": "7197", "total_spent": 11.8, "cashback": 0.12},
-        {"last_digits": "7197", "total_spent": 128.0, "cashback": 1.28},
-        {"last_digits": "7197", "total_spent": 326.31, "cashback": 3.26},
-        {"last_digits": "7197", "total_spent": 105.73, "cashback": 1.06},
-        {"last_digits": "7197", "total_spent": 674.24, "cashback": 6.74},
-        {"last_digits": "7197", "total_spent": 172.0, "cashback": 1.72},
-    ],
-    "top_transactions": [
-        {"date": "02.05.2021", "amount": -674.24, "category": "Супермаркеты", "description": "Магнит"},
-        {"date": "01.05.2021", "amount": -326.31, "category": "Супермаркеты", "description": "Магнит"},
-        {
-            "date": "03.05.2021",
-            "amount": -172.0,
-            "category": "Транспорт",
-            "description": "Северо-Западная пригородная пассажирская компания",
-        },
-        {"date": "01.05.2021", "amount": -128.0, "category": "Супермаркеты", "description": "Колхоз"},
-        {"date": "02.05.2021", "amount": -105.73, "category": "Супермаркеты", "description": "Колхоз"},
-    ],
-    "currency_rates": [{"currency": "USD", "rate": 81.45}, {"currency": "EUR", "rate": 94.73}],
-    "stock_prices": [
-        {"stock": "AAPL", "price": 256.34},
-        {"stock": "AMZN", "price": 221.76},
-        {"stock": "GOOGL", "price": 245.68},
-        {"stock": "MSFT", "price": 523.71},
-        {"stock": "TSLA", "price": 432.5},
-    ],
-}
+from datetime import datetime
+
+import pandas as pd
+import pytest
+from pandas.core.interchange.dataframe_protocol import DataFrame
+
+from config import PATH_TO_EXCEL
+
+
+@pytest.fixture
+def fixture_xlsx() -> DataFrame:
+    df = pd.read_excel(PATH_TO_EXCEL)
+    return df
+
+
+@pytest.fixture
+def dataframe() -> DataFrame:
+    """Фикстура с тестовыми данными"""
+    data = {
+        "Дата операции": [
+            datetime(2021, 1, 1),
+            datetime(2021, 1, 2),
+            datetime(2021, 1, 3),
+            datetime(2021, 1, 4),
+            datetime(2021, 1, 5),
+        ],
+        "Дата платежа": ["2021-01-01", "2021-01-02", "2021-01-03", "2021-01-04", "2021-01-05"],
+        "Сумма операции": [-1000, 500, -2500, -150, 300],
+        "Сумма операции с округлением": [1000.0, 500.0, 2500.0, 150.0, 300.0],
+        "Номер карты": [
+            "123456******7890",
+            "123456******7890",
+            "987654******3210",
+            "123456******7890",
+            "987654******3210",
+        ],
+        "Категория": ["Супермаркеты", "Пополнения", "Транспорт", "Различные товары", "Зарплата"],
+        "Описание": ["Магнит", "Т-Банк", "Метро", "Zhenskiy Trikotazh", "ООО-GDL"],
+    }
+    return pd.DataFrame(data)
