@@ -1,12 +1,12 @@
+import logging
+import os
+from datetime import datetime
 from typing import Optional
 
 import pandas as pd
-from datetime import datetime
-import logging
-import os
-
 from dateutil.relativedelta import relativedelta
 
+from config import PATH_TO_REPORT
 
 log_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "logs")
 log_file = os.path.join(log_dir, "reports.log")
@@ -39,7 +39,7 @@ def write_to_file(filename=None):
                 file.write(f"{result}\n")
                 file.close()
             else:
-                file = open("./data/report.txt", mode="w", encoding="utf-8")
+                file = open(PATH_TO_REPORT, mode="w", encoding="utf-8")
                 file.write(f"{result}\n")
                 file.close()
             return result

@@ -1,4 +1,5 @@
 import json
+import logging
 import os
 from datetime import datetime
 
@@ -6,8 +7,6 @@ import pandas as pd
 import requests
 from dotenv import load_dotenv
 from pandas import DataFrame
-import logging
-
 
 load_dotenv()  # загрузка переменных из .env-файла
 

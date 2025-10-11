@@ -1,19 +1,12 @@
 import json
-from unittest.mock import patch, Mock, mock_open
+from unittest.mock import Mock, mock_open, patch
 
+import pandas as pd
 from pandas.core.interchange.dataframe_protocol import DataFrame
 
-from src.utils import (
-    current_time_greeting,
-    get_slice_data,
-    get_cut_from_excel,
-    get_card_with_spent,
-    get_transactions_by_pay,
-    get_currency_rates,
-    get_stock_prices,
-)
 from config import PATH_TO_EXCEL, PATH_TO_JSON
-import pandas as pd
+from src.utils import (current_time_greeting, get_card_with_spent, get_currency_rates, get_cut_from_excel,
+                       get_slice_data, get_stock_prices, get_transactions_by_pay)
 
 
 def test_current_time_greeting() -> None:

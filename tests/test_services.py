@@ -3,7 +3,7 @@ import json
 from src.services import service_search
 
 
-def test_service_search(list_dict):
+def test_service_search(list_dict: list[dict]) -> None:
     """тест на корректность фильтрации по категории"""
 
     result = service_search(list_dict, "супермаркеты")

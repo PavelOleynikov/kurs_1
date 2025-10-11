@@ -1,4 +1,5 @@
 import json
+from typing import Any
 
 from config import PATH_TO_EXCEL, PATH_TO_JSON
 from src.utils import (
@@ -12,7 +13,7 @@ from src.utils import (
 )
 
 
-def main_page(date_str: str) -> json:
+def main_page(date_str: str) -> Any:
     """функция получает дату и время и возвращает json-ответ с операциями за указанный период"""
 
     time_period = get_slice_data(date_str)  # выбранный период для фильтрации

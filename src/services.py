@@ -2,6 +2,7 @@ import json
 import logging
 import os
 import re
+from typing import Any
 
 log_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "logs")
 log_file = os.path.join(log_dir, "services.log")
@@ -16,7 +17,7 @@ file_handler.setFormatter(file_formatter)
 logger.addHandler(file_handler)
 
 
-def service_search(operations_list: list[dict], search: str) -> json:
+def service_search(operations_list: list[dict], search: str) -> Any:
     """функция фильтрации операций по строке поиска"""
 
     result = []

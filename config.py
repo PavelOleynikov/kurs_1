@@ -5,3 +5,4 @@ ROOT_DIR = CURRENT_FILE.parent
 
 PATH_TO_EXCEL = f"{ROOT_DIR}/data/operations.xlsx"
 PATH_TO_JSON = f"{ROOT_DIR}/data/user_settings.json"
+PATH_TO_REPORT = f"{ROOT_DIR}/data/report.txt"
