@@ -24,10 +24,7 @@ def test_spending_by_category(dataframe: DataFrame) -> None:
         ("Транспорт", "Метро", "03.01.2021"),
     ],
 )
-def test_spending_by_category_param(dataframe: DataFrame,
-                                    category: str,
-                                    description: str,
-                                    test_date: str) -> None:
+def test_spending_by_category_param(dataframe: DataFrame, category: str, description: str, test_date: str):
     """параметризованный тест фильтрации трат по категории"""
 
     result = spending_by_category(dataframe, category, test_date)

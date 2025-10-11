@@ -1,19 +1,46 @@
 import json
+from datetime import datetime
 from unittest.mock import Mock, mock_open, patch
 
 import pandas as pd
+import pytest
 from pandas.core.interchange.dataframe_protocol import DataFrame
 
 from config import PATH_TO_EXCEL, PATH_TO_JSON
-from src.utils import (current_time_greeting, get_card_with_spent, get_currency_rates, get_cut_from_excel,
-                       get_slice_data, get_stock_prices, get_transactions_by_pay)
+from src.utils import (
+    current_time_greeting,
+    get_card_with_spent,
+    get_currency_rates,
+    get_cut_from_excel,
+    get_slice_data,
+    get_stock_prices,
+    get_transactions_by_pay,
+)
 
 
-def test_current_time_greeting() -> None:
-    """тест на корректность приветствия от времени суток"""
+@pytest.mark.parametrize(
+    "mock_hour, expected",
+    [
+        (5, "Доброй ночи"),
+        (11, "Доброе утро"),
+        (17, "Добрый день"),
+        (22, "Добрый вечер"),
+    ],
+)
+def test_current_time_greeting(mock_hour, expected):
+    """Параметризованный тест на корректность приветствия от времени суток"""
 
-    assert current_time_greeting() == "Добрый вечер"  # результат меняется
-    # в зависимости от времени суток
+    # Создаем mock дату с нужным часом
+    mock_date = datetime(2025, 1, 1, mock_hour, 0, 0)
+
+    # Патчим datetime.now() чтобы возвращать нашу mock дату
+    with patch("src.utils.datetime") as mock_datetime:
+        mock_datetime.now.return_value = mock_date
+
+        from src.utils import current_time_greeting
+
+        result = current_time_greeting()
+        assert result == expected
 
 
 def test_get_slice_data() -> None:
