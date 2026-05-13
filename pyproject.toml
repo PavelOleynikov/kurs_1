@@ -1,9 +1,9 @@
 [project]
-name = "kurs-1"
+name = "analysis_of_banking_transactions"
 version = "0.1.0"
 description = ""
 authors = [
-    {name = "Pavel Oleynikov",email = "Pavlushka19805@gmail.com"}
+    { name = "Pavel Oleynikov", email = "Pavlushka19805@gmail.com" }
 ]
 readme = "README.md"
 requires-python = ">=3.13"
@@ -58,4 +58,3 @@ disallow_untyped_defs = true
 no_implicit_optional = true
 warn_return_any = true
 exclude = 'venv'
-

@@ -1,23 +1,36 @@
-# Приложение для анализа банковских операций
+# analysis_of_banking_transactions
 
 ## Описание
 
     Приложение для анализа банковских транзакций, генерирует
     JSON данные для вэб-страниц, формирует excel-отчеты, а 
-    также предоставляет и другие сервисы
+    также предоставляет и другие сервисы, такие как фильтрация операций
+    по строке поиска
 
 ## Установка:
 
 1. Клонируйте репозиторий:
 
 ```
-git clone https://github.com/PavelOleynikov/kurs_1.git
+git clone https://github.com/PavelOleynikov/analysis_of_banking_transactions.git
 ```
 
 2. Установите зависимости:
 
 ```
-pip install -r requirements.txt
+poetry install
+```
+
+3. Активируйте виртуальное окружение:
+
+```
+poetry shell
+```
+
+4. Запустите приложение:
+
+```
+python main.py
 ```
 
 ## Использование:
@@ -126,9 +139,9 @@ user_settings.json
 
     1. Сохраните тесты в файле 
     2. Установите pytest, если не установлен:
-       pip install pytest
+       poetry add pytest
     3. Запустите тесты:
-       например: pytest test_service_search.py -v
+       например: pytest tests/test_services.py -v
 
 ## Функции в проекте:
 
